@@ -2352,7 +2352,7 @@ vector3 normal_to_quadrilateral(vector3 p, vector3 o, vector3 v1, vector3 v2,
                                 double *min_distance)
 { 
   double s, d=0.0;
-  int inside;
+  int inside=1;
   vector3 v3=normal_to_plane(p, o, v1, v2, &s, &inside);
   if(inside==0)
    { vector3 pPlane = vector3_minus(p, vector3_scale(s,v3) );
