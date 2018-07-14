@@ -2363,8 +2363,10 @@ vector3 normal_to_quadrilateral(vector3 p, vector3 o, vector3 v1, vector3 v2,
      d=fmin(d,min_distance_to_line_segment(pPlane,   o, p10));
      d=fmin(d,min_distance_to_line_segment(pPlane, p01, p11));
      d=fmin(d,min_distance_to_line_segment(pPlane, p11, p10));
+     *min_distance=fabs(s);
+   } else {
+     *min_distance=fabs(d);
    }
-  *min_distance=sqrt(s*s+d*d);
   return v3;
 }
 
