@@ -2147,7 +2147,7 @@ boolean intersect_line_with_segment(double px, double py, double dx, double dy,
    return 0;
 
   double t = (M00*RHSy-M10*RHSx)/DetM;
-  if (s) *s = (M11*RHSx-M01*RHSy)/DetM;
+  *s = (M11*RHSx-M01*RHSy)/DetM;
 
   // the plumb line intersects the segment if 0<=t<=1, with t==0,1
   // corresponding to the endpoints; for our purposes we count
@@ -2158,14 +2158,15 @@ boolean intersect_line_with_segment(double px, double py, double dx, double dy,
 
 // like the previous routine, but only count intersections if s>=0
 boolean intersect_ray_with_segment(double px, double py, double dx, double dy,
-                                   vector3 v1, vector3 v2, double *s)
+                                   vector3 v1, vector3 v2)
 {
   double ss;
   int status=intersect_line_with_segment(px,py,dx,dy,v1,v2,&ss);
-  if (status==0 || ss<0.0)
+  if (status==0 || ss<0.0) {
    return 0;
-  if (s) *s=ss;
-  return 1;
+  } else {
+   return 1;
+  }
 }
 
 /***************************************************************/
@@ -2183,8 +2184,7 @@ boolean point_in_polygon(double px, double py, vector3 *vertices, int num_vertic
   for(nv=0; nv<num_vertices; nv++)
    num_side_intersections
     +=intersect_ray_with_segment(px, py, dx, dy,
-                                 vertices[nv], vertices[(nv+1)%num_vertices],
-                                 0);
+                                 vertices[nv], vertices[(nv+1)%num_vertices]);
   return num_side_intersections%2;
 }
 
